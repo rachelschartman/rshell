@@ -1,18 +1,36 @@
 #ifndef CONNECTOR_H
 #define CONNECTOR_H
 #include "BaseCmd.h"
-    
+
+enum ConType {success, failure, next};
+ 
 class Connector : public BaseCmd {
     private:
         BaseCmd* left;
         BaseCmd* right;
-        string type;
+        ConType type;
     public:
         Connector() { };
-        Connector(BaseCmd* l, BaseCmd* r, string t) : left(l), right(r), 
+        Connector(BaseCmd* l, BaseCmd* r, ConType t) : left(l), right(r), 
             type(t) { };
+        void addLeft(BaseCmd* l) {
+            left = l;
+        };
+        void addRight(BaseCmd* r) {
+            right = r;
+        };
         int execute() {
-            //insert stuff here 
+            int status = left->execute();
+            if(status == 0 && type == success){
+                status = right->execute();        
+            }
+            else if(status == 1 && type == failure){
+                status = right->execute();
+            }
+            else if(type == next){
+                status = right->execute();                
+            }
+            return status;
         };
 };
 #endif
