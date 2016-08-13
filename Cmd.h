@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/wait.h>
 #include "BaseCmd.h"
 
@@ -15,6 +16,9 @@ class Cmd : public BaseCmd {
         Cmd() { };
         Cmd(char ** arg) : args(arg) { };
         int execute() {
+            if (strcmp(args[0], "exit") == 0) {
+                exit(0);
+            }
             int procID, status;
             procID = fork();
             
@@ -25,5 +29,7 @@ class Cmd : public BaseCmd {
             int waitID = wait(&status);
             return status;
         };
+        void addLeft(BaseCmd* l) {};
+        void addRight(BaseCmd* r) {};
 };
 #endif

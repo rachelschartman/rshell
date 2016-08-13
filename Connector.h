@@ -3,7 +3,7 @@
 #include "BaseCmd.h"
 
 enum ConType {success, failure, next};
- 
+
 class Connector : public BaseCmd {
     private:
         BaseCmd* left;
