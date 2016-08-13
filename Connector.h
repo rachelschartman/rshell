@@ -11,6 +11,7 @@ class Connector : public BaseCmd {
         ConType type;
     public:
         Connector() { };
+        Connector(ConType t) : type(t) {};
         Connector(BaseCmd* l, BaseCmd* r, ConType t) : left(l), right(r), 
             type(t) { };
         void addLeft(BaseCmd* l) {
@@ -24,7 +25,7 @@ class Connector : public BaseCmd {
             if(status == 0 && type == success){
                 status = right->execute();        
             }
-            else if(status == 1 && type == failure){
+            else if(status != 0 && type == failure){
                 status = right->execute();
             }
             else if(type == next){

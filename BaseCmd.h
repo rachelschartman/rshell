@@ -4,6 +4,6 @@
 class BaseCmd {
   public:
     BaseCmd() { };
-    virtual int execute();
+    virtual int execute() = 0;
 };
 #endif
