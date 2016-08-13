@@ -22,5 +22,11 @@ int main() {
     Connector con(&cmd, &cmd2, failure);
     
     con.execute();
+    
+    //create Base* 
+    //getline
+    //frame cmd
+    //execute cmd
+    
     return 0;
 }
