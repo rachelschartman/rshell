@@ -33,5 +33,9 @@ class Connector : public BaseCmd {
             }
             return status;
         };
+        ~Connector() {
+            delete left;
+            delete right;
+        };
 };
 #endif

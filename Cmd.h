@@ -31,5 +31,14 @@ class Cmd : public BaseCmd {
         };
         void addLeft(BaseCmd* l) {};
         void addRight(BaseCmd* r) {};
+        ~Cmd() {
+            int argNum = 0;
+            while (args[argNum] != 0) {
+                delete[] args[argNum];
+                argNum++;
+            }
+            delete[] args;
+            
+        };
 };
 #endif

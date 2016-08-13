@@ -22,11 +22,11 @@ class CmdComposer {
                     v.push_back(tstr.substr(0, tstr.size() - 1));
                     break;
                 }
-                else if(strcmp(tstr, "||")) {
+                else if(strcmp(tstr.c_str(), "||") == 0) {
                     conType = failure; 
                     break;
                 }
-                else if(strcmp(tstr, "&&")) {
+                else if(strcmp(tstr.c_str(), "&&") == 0) {
                     conType = success;
                     break;
                 } 
@@ -54,8 +54,9 @@ class CmdComposer {
                 return head;
             }
             else {
-                BaseCmd* newCon = new Connector(conType);
+                BaseCmd* newCon = new Connector((ConType)conType);
                 newCon->addLeft(head);
+                head = newCon;
                 return compose(ss, head);
             }
         };

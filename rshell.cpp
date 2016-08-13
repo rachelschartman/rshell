@@ -26,5 +26,6 @@ int main() {
         istringstream ss(str);
         BaseCmd* bc = composer.compose(ss);
         bc->execute();
+        delete bc;
     }
 }
