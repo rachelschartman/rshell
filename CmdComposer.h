@@ -4,6 +4,7 @@
 #include "Cmd.h"
 #include "Connector.h"
 #include <sstream>
+#include <iostream>
 #include <vector>
 #include <string.h>
 
@@ -37,8 +38,18 @@ class CmdComposer {
                                 }
                                 tstr2 = tstr2.substr(0, tstr2.size() - 1);
                             }
-                            tstr += " ";
+                            if (tstr.at(tstr.size() - 1) != '\n') {
+                                 tstr += " ";    
+                            }
                             tstr += tstr2;
+                        }
+                        else {
+                            string tempstr;
+                            cout << "> ";
+                            tstr += '\n';
+                            getline(cin, tempstr);
+                            ss.str(tempstr);
+                            ss.clear();
                         }
                     }
                 } //end quotation marks
