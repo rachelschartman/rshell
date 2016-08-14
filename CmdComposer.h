@@ -17,7 +17,7 @@ class CmdComposer {
             vector<string> v;
             int conType = -1; //default no connector
             
-            while (ss >> tstr) {
+            while (ss >> tstr) { //quotation marks
                 if (tstr.at(0) == '"') {
                     bool isFinished = false;
                     tstr = tstr.substr(1, tstr.size() - 1);
@@ -41,7 +41,16 @@ class CmdComposer {
                             tstr += tstr2;
                         }
                     }
+                } //end quotation marks
+                bool isComment = false;
+                for (int i = 0; i < tstr.size(); ++i) {
+                    if(tstr.at(i) == '#') {
+                        tstr = tstr.substr(0, i);
+                        isComment = true;
+                    }
                 }
+                if (isComment) break;
+                
                 if(tstr.at(tstr.size() - 1) == ';') {
                     conType = next; //semicolon
                     v.push_back(tstr.substr(0, tstr.size() - 1));
