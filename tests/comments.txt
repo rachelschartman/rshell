@@ -1,0 +1,7 @@
+echo hello #this is a comment
+
+echo world#this comment comes mid sentence
+
+echo "here is a # inside quotation marks, it shouldn't comment" #this is a comment
+
+exit

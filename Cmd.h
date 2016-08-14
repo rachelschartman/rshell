@@ -16,6 +16,7 @@ class Cmd : public BaseCmd {
         Cmd() { };
         Cmd(char ** arg) : args(arg) { };
         int execute() {
+            if (args[0] == 0) return 1;
             if (strcmp(args[0], "exit") == 0) {
                 exit(0);
             }
