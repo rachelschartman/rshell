@@ -16,7 +16,32 @@ class CmdComposer {
             string tstr;
             vector<string> v;
             int conType = -1; //default no connector
+            
             while (ss >> tstr) {
+                if (tstr.at(0) == '"') {
+                    bool isFinished = false;
+                    tstr = tstr.substr(1, tstr.size() - 1);
+                    while (!isFinished) {
+                        string tstr2;
+                        if (ss >> tstr2) {
+                            int i;
+                            for (i = 0; i < tstr2.size(); ++i) {
+                                if(tstr2.at(i) == '"') {
+                                    isFinished = true;
+                                    break;
+                                }
+                            }
+                            if (isFinished) {
+                                for ( ; i < tstr2.size() - 1; ++i) {
+                                    tstr2.at(i) = tstr2.at(i + 1);
+                                }
+                                tstr2 = tstr2.substr(0, tstr2.size() - 1);
+                            }
+                            tstr += " ";
+                            tstr += tstr2;
+                        }
+                    }
+                }
                 if(tstr.at(tstr.size() - 1) == ';') {
                     conType = next; //semicolon
                     v.push_back(tstr.substr(0, tstr.size() - 1));
@@ -29,7 +54,8 @@ class CmdComposer {
                 else if(strcmp(tstr.c_str(), "&&") == 0) {
                     conType = success;
                     break;
-                } 
+                }
+                
                 
                 v.push_back(tstr);
                 
