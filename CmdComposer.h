@@ -53,14 +53,16 @@ class CmdComposer {
                         }
                     }
                 } //end quotation marks
-                bool isComment = false;
-                for (int i = 0; i < tstr.size(); ++i) {
-                    if(tstr.at(i) == '#') {
-                        tstr = tstr.substr(0, i);
-                        isComment = true;
+                else {
+                    bool isComment = false;
+                    for (int i = 0; i < tstr.size(); ++i) {
+                        if(tstr.at(i) == '#') {
+                            tstr = tstr.substr(0, i);
+                            isComment = true;
+                        }
                     }
+                    if (isComment) break;
                 }
-                if (isComment) break;
                 
                 if(tstr.at(tstr.size() - 1) == ';') {
                     conType = next; //semicolon
