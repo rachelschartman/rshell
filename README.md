@@ -5,6 +5,8 @@
                         and turns it into a tree of Cmd and Connector classes which is
                         then executed by calling the execute function on the root node.
                         
-**COMPILATION**: To compile this program and run it all you have to do is run
-                 $make and then $bin/rshell from the Cs100Assn2 directory and
-                 and the program will start.
+**COMPILATION**:        To compile this program and run it all you have to do is run
+                        $make and then $bin/rshell from the Cs100Assn2 directory and
+                        and the program will start.
+                 
+**KNOWN BUGS**:         The terminal cannot accept arrow-key entries on a keyboard.
