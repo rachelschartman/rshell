@@ -22,6 +22,13 @@ class CmdComposer {
                 if (tstr.at(0) == '"') {
                     bool isFinished = false;
                     tstr = tstr.substr(1, tstr.size() - 1);
+                    if (tstr.find('"') != string::npos) {
+                        isFinished = true;
+                        for (int i = tstr.find('"'); i < tstr.size() - 1; i++) {
+                            tstr.at(i) = tstr.at(i+1);
+                        }
+                        tstr = tstr.substr(0, tstr.size() - 1);
+                    }
                     while (!isFinished) {
                         string tstr2;
                         if (ss >> tstr2) {
