@@ -9,7 +9,7 @@ using namespace std;
 
 int main() {
     CmdComposer composer;
-    char u[40];
+    char u[40]; //extra credit :-)
     char h[40];
     for (int i = 0; i < 40; ++i) {
         u[i] = 0;
@@ -19,13 +19,13 @@ int main() {
     getlogin_r(u, 40);
 
     //main loop
-    while (true) {
-        cout << u << "@" << h << "$ ";
+    while (true) { // main loop
+        cout << u << "@" << h << "$ "; //print prompt
         string str;
-        getline(cin, str);
-        istringstream ss(str);
-        BaseCmd* bc = composer.compose(ss);
-        bc->execute();
-        delete bc;
+        getline(cin, str); //get line of command
+        istringstream ss(str); //set up strin stream
+        BaseCmd* bc = composer.compose(ss); //compose command into tree
+        bc->execute(); //execute command
+        delete bc; //deallocate memory-- no memory leaks allowed
     }
 }

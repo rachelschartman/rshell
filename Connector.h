@@ -6,21 +6,21 @@ enum ConType {success, failure, next};
 
 class Connector : public BaseCmd {
     private:
-        BaseCmd* left;
+        BaseCmd* left; //private data
         BaseCmd* right;
         ConType type;
     public:
         Connector() { };
-        Connector(ConType t) : type(t) {};
+        Connector(ConType t) : type(t) {}; //constructor
         Connector(BaseCmd* l, BaseCmd* r, ConType t) : left(l), right(r), 
             type(t) { };
         void addLeft(BaseCmd* l) {
             left = l;
-        };
+        }; 
         void addRight(BaseCmd* r) {
             right = r;
         };
-        int execute() {
+        int execute() { //execute children depending on success of left
             int status = left->execute();
             if(status == 0 && type == success){
                 status = right->execute();        
@@ -33,7 +33,7 @@ class Connector : public BaseCmd {
             }
             return status;
         };
-        ~Connector() {
+        ~Connector() { //delete left and right recursively
             delete left;
             delete right;
         };

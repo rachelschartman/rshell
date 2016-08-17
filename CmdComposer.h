@@ -22,24 +22,25 @@ class CmdComposer {
                 if (tstr.at(0) == '"') {
                     bool isFinished = false;
                     tstr = tstr.substr(1, tstr.size() - 1);
-                    if (tstr.find('"') != string::npos) {
+                    if (tstr.find('"') != string::npos) { //for single word quotation marks (why?)
                         isFinished = true;
                         for (int i = tstr.find('"'); i < tstr.size() - 1; i++) {
                             tstr.at(i) = tstr.at(i+1);
                         }
                         tstr = tstr.substr(0, tstr.size() - 1);
                     }
-                    while (!isFinished) {
+                    while (!isFinished) { //keep parsing until quotation mark closers are met
+                                          //remove closing quotation marks
                         string tstr2;
                         if (ss >> tstr2) {
                             int i;
-                            for (i = 0; i < tstr2.size(); ++i) {
+                            for (i = 0; i < tstr2.size(); ++i) { //search for quotation marks
                                 if(tstr2.at(i) == '"') {
                                     isFinished = true;
                                     break;
                                 }
                             }
-                            if (isFinished) {
+                            if (isFinished) { //if quotation marks are found remove them
                                 for ( ; i < tstr2.size() - 1; ++i) {
                                     tstr2.at(i) = tstr2.at(i + 1);
                                 }
@@ -50,7 +51,7 @@ class CmdComposer {
                             }
                             tstr += tstr2;
                         }
-                        else {
+                        else {  //deal with multi-line quotations
                             string tempstr;
                             cout << "> ";
                             tstr += '\n';
@@ -61,7 +62,7 @@ class CmdComposer {
                     }
                 } //end quotation marks
                 else {
-                    bool isComment = false;
+                    bool isComment = false; // deal with comments
                     for (int i = 0; i < tstr.size(); ++i) {
                         if(tstr.at(i) == '#') {
                             tstr = tstr.substr(0, i);
@@ -86,29 +87,29 @@ class CmdComposer {
                 }
                 
                 
-                v.push_back(tstr);
+                v.push_back(tstr); //push_back arguments
                 
             }
             char** args = new char*[v.size() + 1];
-            //dynamically allocate mem
+            //dynamically allocate mem for arguments
             for (int i = 0; i < v.size(); ++i) {
                 args[i] = new char[v.at(i).size() + 1];
                 strcpy(args[i], v.at(i).c_str());
             }
             args[v.size()] = 0;
             
-            BaseCmd* tempCmd = new Cmd(args);
+            BaseCmd* tempCmd = new Cmd(args); //create new command with arguments
             
-            if(head == 0) {
+            if(head == 0) { //no connector
                 head = tempCmd;
             }
             else {
-                head->addRight((tempCmd));
+                head->addRight((tempCmd)); //place new command in tree if not first command
             }
-            if(conType == -1) {
+            if(conType == -1) { //base case return if there's no next connector
                 return head;
             }
-            else {
+            else { //recursively construct commands from the rest of the line
                 BaseCmd* newCon = new Connector((ConType)conType);
                 newCon->addLeft(head);
                 head = newCon;
