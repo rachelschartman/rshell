@@ -27,7 +27,7 @@ class Cmd : public BaseCmd {
                 int index = 1; //default index for file path
                 
                 if (strcmp(args[1], "-e") == 0) {
-                    index++;
+                    index++; //
                 }
                 else if (strcmp(args[1], "-f") == 0) {
                     index++;
@@ -37,22 +37,22 @@ class Cmd : public BaseCmd {
                     index++;
                     option = 2;
                 }
-                struct stat info;
-                if ( stat( args[index], &info ) != 0) {
+                struct stat info; 
+                if ( stat( args[index], &info ) != 0) { //if file doesn't exist
                     cout << "(False)" << endl;
                     return 1;
                 }
-                else if ( info.st_mode & S_IFDIR ) {
+                else if ( info.st_mode & S_IFDIR ) { //if it's a directory
                     if (option == 0 || option == 2) {
                         cout << "(True)" << endl;
                         return 0;
                     }
-                    else {
+                    else { 
                         cout << "(False)" << endl; 
                         return 1;
                     }
                 }
-                else {
+                else { //if it's a file
                     if (option == 1 || option == 0) {
                         cout << "(True)" << endl;
                         return 0;
@@ -82,6 +82,7 @@ class Cmd : public BaseCmd {
                 argNum++;
             }
             delete[] args;
+            
             
         };
 };
