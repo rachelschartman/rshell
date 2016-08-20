@@ -4,6 +4,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include "BaseCmd.h"
 
@@ -19,6 +21,47 @@ class Cmd : public BaseCmd {
             if (args[0] == 0) return 1; //if null command return 0;
             if (strcmp(args[0], "exit") == 0) {
                 exit(0);
+            }
+            else if ((strcmp(args[0], "test") == 0) || strcmp(args[0], "[") == 0) { //test command
+                int option = 0; //default to -e (0 for e, 1 for f, 2 for d)
+                int index = 1; //default index for file path
+                
+                if (strcmp(args[1], "-e") == 0) {
+                    index++;
+                }
+                else if (strcmp(args[1], "-f") == 0) {
+                    index++;
+                    option = 1;
+                }
+                else if (strcmp(args[1], "-d") == 0) {
+                    index++;
+                    option = 2;
+                }
+                struct stat info;
+                if ( stat( args[index], &info ) != 0) {
+                    cout << "(False)" << endl;
+                    return 1;
+                }
+                else if ( info.st_mode & S_IFDIR ) {
+                    if (option == 0 || option == 2) {
+                        cout << "(True)" << endl;
+                        return 0;
+                    }
+                    else {
+                        cout << "(False)" << endl; 
+                        return 1;
+                    }
+                }
+                else {
+                    if (option == 1 || option == 0) {
+                        cout << "(True)" << endl;
+                        return 0;
+                    } else {
+                        cout << "(False)" << endl;
+                        return 1;
+                    }
+                }
+                return 0;
             }
             int procID, status; //for forking and execvp
             procID = fork(); //fork
