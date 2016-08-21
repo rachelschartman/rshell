@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <string.h>
+#include "ParenCmd.h"
 
 using namespace std;
 
@@ -17,9 +18,35 @@ class CmdComposer {
             string tstr;
             vector<string> v;
             int conType = -1; //default no connector
-            
-            while (ss >> tstr) { //quotation marks
-                if (tstr.at(0) == '"') {
+            BaseCmd* parenCmd = 0; //keeps track of whether there is a parenthesis
+            while (ss >> tstr) { 
+                
+                                       //command or not
+                if(tstr.at(0) == '(') { //deciphers parenthesis 
+                    tstr = tstr.substr(1);
+                    int numParen = 1;
+                    char c; //character read
+                    bool inQuotes = false; //keeps track of quotations
+                    
+                    
+                    while ( (numParen > 0) && ss.get(c)) {
+                        if (c == '"') {
+                            inQuotes = !inQuotes; //toggle quotes
+                        }
+                        else if (c == '(' && !inQuotes) {
+                            numParen++;
+                        }
+                        else if (c == ')' && !inQuotes) {
+                            numParen--;
+                        }
+                        tstr += c;
+                        
+                    }
+                    tstr = tstr.substr(0, tstr.size() - 1);
+                    istringstream strin(tstr);
+                    parenCmd = new ParenCmd(this->compose(strin));
+                }
+                if (tstr.at(0) == '"') { //quotation marks
                     bool isFinished = false;
                     tstr = tstr.substr(1, tstr.size() - 1);
                     if (tstr.find('"') != string::npos) { //for single word quotation marks (why?)
@@ -98,7 +125,7 @@ class CmdComposer {
             }
             args[v.size()] = 0;
             
-            BaseCmd* tempCmd = new Cmd(args); //create new command with arguments
+            BaseCmd* tempCmd = (parenCmd == 0) ? new Cmd(args) : parenCmd; //create new command with arguments
             
             if(head == 0) { //no connector
                 head = tempCmd;
