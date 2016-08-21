@@ -29,7 +29,17 @@ class CmdComposer {
                     bool inQuotes = false; //keeps track of quotations
                     
                     
-                    while ( (numParen > 0) && ss.get(c)) {
+                    while ( (numParen > 0) ) {
+                        if (!(ss.get(c))) {
+                            cout << "> ";
+                            string tempString;
+                            string space = " ";
+                            getline(cin, tempString);
+                            tempString = space + tempString;
+                            ss.str(tempString);
+                            ss.clear();
+                            c = ss.get();
+                        }
                         if (c == '"') {
                             inQuotes = !inQuotes; //toggle quotes
                         }
