@@ -70,7 +70,7 @@ class Cmd : public BaseCmd {
                 int i = execvp(args[0], args); //run execvp
                 exit(i);
             }
-            int waitID = wait(&status);
+            wait(&status);
             return status; 
         };
         void addLeft(BaseCmd* l) {}; //do nothing in command

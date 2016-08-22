@@ -61,7 +61,7 @@ class CmdComposer {
                     tstr = tstr.substr(1, tstr.size() - 1);
                     if (tstr.find('"') != string::npos) { //for single word quotation marks (why?)
                         isFinished = true;
-                        for (int i = tstr.find('"'); i < tstr.size() - 1; i++) {
+                        for (unsigned i = tstr.find('"'); i < tstr.size() - 1; i++) {
                             tstr.at(i) = tstr.at(i+1);
                         }
                         tstr = tstr.substr(0, tstr.size() - 1);
@@ -70,7 +70,7 @@ class CmdComposer {
                                           //remove closing quotation marks
                         string tstr2;
                         if (ss >> tstr2) {
-                            int i;
+                            unsigned i;
                             for (i = 0; i < tstr2.size(); ++i) { //search for quotation marks
                                 if(tstr2.at(i) == '"') {
                                     isFinished = true;
@@ -100,7 +100,7 @@ class CmdComposer {
                 } //end quotation marks
                 else {
                     bool isComment = false; // deal with comments
-                    for (int i = 0; i < tstr.size(); ++i) {
+                    for (unsigned i = 0; i < tstr.size(); ++i) {
                         if(tstr.at(i) == '#') {
                             tstr = tstr.substr(0, i);
                             isComment = true;
@@ -129,7 +129,7 @@ class CmdComposer {
             }
             char** args = new char*[v.size() + 1];
             //dynamically allocate mem for arguments
-            for (int i = 0; i < v.size(); ++i) {
+            for (unsigned i = 0; i < v.size(); ++i) {
                 args[i] = new char[v.at(i).size() + 1];
                 strcpy(args[i], v.at(i).c_str());
             }
