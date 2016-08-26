@@ -28,6 +28,19 @@ class CmdComposer {
                     char c; //character read
                     bool inQuotes = false; //keeps track of quotations
                     
+                    for (unsigned i = 0; i < tstr.size(); i++) {
+                        c = tstr.at(i);
+                        if (c == '"') {
+                            inQuotes = !inQuotes; //toggle quotes
+                        }
+                        else if (c == '(' && !inQuotes) {
+                            numParen++;
+                        }
+                        else if (c == ')' && !inQuotes) {
+                            numParen--;
+                        }
+                    }
+                    
                     
                     while ( (numParen > 0) ) {
                         if (!(ss.get(c))) {
